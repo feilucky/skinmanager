@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="itemText" format="reference" />
+    <style name="itemText">
+        <item name="android:textColor">@color/color_text_1</item>
+        <item name="android:text">@string/my_name</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+</resources>
