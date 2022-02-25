@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.mxtech.demo.entity.DynamicAttr;
@@ -17,6 +18,7 @@ import com.mxtech.demo.loader.SkinManager;
 import java.util.List;
 
 public class BaseActivity extends AppCompatActivity implements ISkinUpdate, IDynamicNewView {
+    private static final String TAG = BaseActivity.class.getSimpleName();
     private SkinInflaterFactory mSkinInflaterFactory;
     private boolean isResponseOnSkinChanging = true;
 
@@ -43,10 +45,11 @@ public class BaseActivity extends AppCompatActivity implements ISkinUpdate, IDyn
 
     @Override
     public void onThemeUpdate() {
+        Log.d("zhanfei",TAG + ".onThemeUpdate......");
         if (!isResponseOnSkinChanging) {
             return;
         }
-        mSkinInflaterFactory.applySkin();
+//        mSkinInflaterFactory.applySkin();
     }
 
     @Override

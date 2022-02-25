@@ -3,7 +3,10 @@ package com.mxtech.demo.entity;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.content.res.XmlResourceParser;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.util.Xml;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +102,25 @@ public class AttrFactory {
 
         }
         styleAttr.skinAttrs = skinAttrs;
+
+        //===========================================//
+        String pkg = context.getResources().getResourcePackageName(id);
+        String layout = context.getResources().getResourceEntryName(id);
+        Log.d("zhanfei",TAG + ". paraseStyleNode.pkg: " + pkg + ",id= " + id);
+        Log.d("zhanfei",TAG + ". paraseStyleNode.layout: " + layout);
+        XmlResourceParser parser = context.getResources().getLayout(id);
+        AttributeSet attrs = Xml.asAttributeSet(parser);
+        Log.d("zhanfei",TAG + ". paraseStyleNode.attrs: " + attrs);
+
+        if(attrs != null) {
+            for(int i=0;i<attrs.getAttributeCount();i++) {
+                String attrName = attrs.getAttributeName(i);
+                String attrValue = attrs.getAttributeValue(i);
+                Log.d("zhanfei",TAG + ". paraseStyleNode.attrName: " + attrName);
+                Log.d("zhanfei",TAG + ". paraseStyleNode.attrValue: " + attrValue);
+            }
+        }
+        //===========================================//
         return skinAttrs;
     }
 }

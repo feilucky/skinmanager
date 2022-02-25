@@ -135,7 +135,6 @@ public class SkinInflaterFactory implements Factory {
 			skinItem.attrs = viewAttrs;
 
 			mSkinItems.add(skinItem);
-			
 			if(SkinManager.getInstance().isExternalSkin()){
 				skinItem.apply();
 			}

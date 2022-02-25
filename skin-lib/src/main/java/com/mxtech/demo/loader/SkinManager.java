@@ -11,8 +11,12 @@ import android.content.res.Resources.NotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 
 import com.mxtech.demo.config.SkinConfig;
+import com.mxtech.demo.entity.AttrFactory;
+import com.mxtech.demo.entity.SkinAttr;
+import com.mxtech.demo.entity.SkinItem;
 import com.mxtech.demo.listener.ILoaderListener;
 import com.mxtech.demo.listener.ISkinLoader;
 import com.mxtech.demo.listener.ISkinUpdate;
@@ -83,7 +87,7 @@ public class SkinManager implements ISkinLoader {
     }
 
     public void restoreDefaultTheme() {
-        SkinConfig.saveSkinPath(context, SkinConfig.DEFALT_SKIN);
+        SkinConfig.saveSkinPath(context, SkinConfig.DEFAULT_SKIN);
         isDefaultSkin = true;
         mResources = context.getResources();
         notifySkinUpdate();
@@ -258,6 +262,7 @@ public class SkinManager implements ISkinLoader {
         if (mResources == null || isDefaultSkin) {
             isExtendSkin = false;
         }
+        Log.d("zhanfei",TAG + ". convertToColorStateList.isExtendSkin: " + isExtendSkin);
 
         String resName = context.getResources().getResourceEntryName(resId);
         if (isExtendSkin) {
@@ -290,5 +295,21 @@ public class SkinManager implements ISkinLoader {
 
         int[][] states = new int[1][1];
         return new ColorStateList(states, new int[]{context.getResources().getColor(resId)});
+    }
+
+
+    public void dynamicAddSkinEnableView(Context context, View view, String attrName, int attrValueResId){
+        int id = attrValueResId;
+        String entryName = context.getResources().getResourceEntryName(id);
+        String typeName = context.getResources().getResourceTypeName(id);
+        SkinAttr mSkinAttr = AttrFactory.get(context,attrName, id, entryName, typeName);
+        SkinItem skinItem = new SkinItem();
+        skinItem.view = view;
+        List<SkinAttr> viewAttrs = new ArrayList<SkinAttr>();
+        viewAttrs.add(mSkinAttr);
+        skinItem.attrs = viewAttrs;
+        if(SkinManager.getInstance().isExternalSkin()){
+            skinItem.apply();
+        }
     }
 }
